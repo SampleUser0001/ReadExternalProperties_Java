@@ -1,0 +1,2 @@
+# ReadExternalProperties_Java
+外部のpropertiesを読み込む。
