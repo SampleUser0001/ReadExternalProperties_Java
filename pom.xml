@@ -53,7 +53,6 @@
               </excludes> -->
             </resource>
           </resources>
-          <!-- <outputDirectory>${basedir}/target</outputDirectory> -->
         </configuration>
       </plugin>
 
@@ -69,8 +68,9 @@
               <addClasspath>true</addClasspath>
             </manifest>
           </archive>
+          <!-- jarにpropertiesを含める場合はexcludesを外す -->
           <excludes>
-            <exclude>**/properties/**</exclude>
+            <exclude>**/*.properties</exclude>
           </excludes>
         </configuration>
       </plugin>
