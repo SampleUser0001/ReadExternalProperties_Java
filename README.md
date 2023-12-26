@@ -1,63 +1,40 @@
 # ReadExternalProperties_Maven
+
 Mavenのresources配下ののpropertiesを読み込む。
 
-## ディレクトリ構成
+- [ReadExternalProperties\_Maven](#readexternalproperties_maven)
+  - [基本](#基本)
+  - [ファイル一覧](#ファイル一覧)
+  - [実行](#実行)
+  - [参考](#参考)
+
+## 基本
+
+propertiesはclassLoaderを使う場合、クラスパスを基準に検索される。フルパスで指定しても読み込みできるが、  
+Mavenの場合、`mvn compile`を実行すると`src/main/resources`配下のファイルが`target/classes`（クラスパス直下）にコピーされるので、フルパスで指定しなくても読み込みできる。  
+jarを使用する場合、クラスパスはマニフェストファイルに書かれる。マニフェストファイルにどう書くかはpom.xmlで指定できる。
+
+## ファイル一覧
 
 ``` txt
-$ tree src
+
 src
 ├── main
-│   ├── java
-│   │   └── sample
-│   │       └── properties
-│   │           └── App.java
-│   └── resources
-│       └── properties
-│           └── sample.properties
+│   ├── java
+│   │   └── sample
+│   │       └── props
+│   │           ├── App.java
+│   │           └── enums
+│   │               └── SamplePropertiesEnum.java
+│   └── resources
+│       └── sample.properties
 └── test
     └── java
         └── sample
             └── properties
                 └── AppTest.java
 
-10 directories, 3 files
-```
-
-## ソース
-
-``` java
-package sample.properties;
-
-import java.util.Properties;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.nio.file.Paths;
-
-/**
- * Mavenのresources配下のpropertiesを読み込む
- */
-public class App {
-    public static final String PROPERTIES_FILEPATH = Paths.get("/","properties","sample.properties").toString();
-    public static final String SAMPLE_KEY = "sample.key";
-    
-    public void exec(String[] args) {
-        Properties props = new Properties();
-        try (InputStream in = getClass().getResourceAsStream(PROPERTIES_FILEPATH)){
-            props.load(new InputStreamReader(in, "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(props.getProperty(SAMPLE_KEY));
-    }
-
-    
-    public static void main(String[] args) {
-        new App().exec(args);
-    }
-
-}
-
+10 directories, 4 files
 ```
 
 ## 実行

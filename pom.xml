@@ -49,10 +49,12 @@
               <filtering>true</filtering>
               
               <!-- <excludes>
-                <exclude>properties/**</exclude>
+                <exclude>**/*.properties</exclude>
               </excludes> -->
             </resource>
           </resources>
+          <!-- propertiesをtarget直下に配置する。 jar実行時に使用する。exec:javaで実行する場合は削除する。-->
+          <!-- <outputDirectory>${basedir}/target</outputDirectory> -->
         </configuration>
       </plugin>
 
@@ -63,10 +65,15 @@
         <version>3.1.0</version>
         <configuration>
           <archive> 
+            <!-- java -jar コマンドでjarファイルを実行できるようにする -->
             <manifest>
               <mainClass>${project.mainClass}</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
+            <!-- propertiesを外部から読み込む場合は必要。propertiesはMANIFESTファイルのclasspathを基準に探しに行くため。-->
+            <manifestEntries>
+              <Class-Path>./</Class-Path>
+            </manifestEntries>
           </archive>
           <!-- jarにpropertiesを含める場合はexcludesを外す -->
           <excludes>
